@@ -14,6 +14,7 @@ public class volunteerQuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_volunteer_quiz);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Button submitQuizButton = findViewById(R.id.submitQuizButton);
 
         submitQuizButton.setOnClickListener(new View.OnClickListener() {
