@@ -14,10 +14,6 @@ public class client implements Protocols {
     private String channelID;
     private User user;
 
-    //TODO: Implement the functionality for the ActiveUsers list so that it can be displayed in the UI
-    // Implement the functionality for Connecting to a specific user when the user clicks on one of the active users from the list
-    // Implement the Disconnect functionality so that, when a user disconnects they can update the server
-
 
     public client(String hostname, int port, String username, User.TYPE type) throws IOException {
         this.duplexer=new Duplexer(new Socket(hostname,port));// creating a new Duplexer object
@@ -25,7 +21,7 @@ public class client implements Protocols {
         this.type=type;
         this.serverStatus=true;
         this.channelID=null;
-        this.user=new User(type,username, User.STATUS.ONLINE);
+        this.user=new User(type, User.STATUS.ONLINE);
     }
     private void sendMessage(String message){
         this.duplexer.send(message);
@@ -40,7 +36,6 @@ public class client implements Protocols {
      */
     public void run() throws CommException {
         while (serverStatus){
-
             // Receiving data from the Server and updating the client
             if(!this.duplexer.nextLine()){
                 try {
@@ -59,6 +54,7 @@ public class client implements Protocols {
                     break;
                 case ACTIVE_USERS:
                     this.activeVolunteers.addAll(messages.subList(1, messages.size() - 1));// this list will contain all the active Volunteers
+                    this.user.setActiveUsersList(activeVolunteers);// updating the client with the current active Volunteers that they can connect to
                     break;
                 case CONNECTED:
                     this.channelID=messages.get(1);
@@ -98,6 +94,14 @@ public class client implements Protocols {
             else if(this.user.updateServer==true){
                 this.duplexer.send(SEND+" "+channelID+" "+this.user.getMessageFromUI());
                 this.user.newMessageFromUI(false);// once the client has read the message setting back the UI update to false
+            }
+            else if (this.user.updateServerNewVolunteer==true){
+                this.duplexer.send(CONNECT+" "+this.user.getConnectedUsername());
+                this.user.setUpdateServerNewVolunteer(false);// re-initializing it after updating once
+            }
+            else if (this.user.getStatus()== User.STATUS.OFFLINE){// if the user wants to disconnect, then send update to the server
+                this.duplexer.send(USER_OFFLINE+" "+this.username);
+                serverStatus=false;
             }
         }
     }
