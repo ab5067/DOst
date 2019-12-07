@@ -1,4 +1,4 @@
-package com.example.dost;
+package com.example.dost.ServerClientNetwork;
 
 /**
  * author: Sanchit Monga
