@@ -26,19 +26,16 @@ public class AfflictedActivity extends AppCompatActivity {
         afflictedEnterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Name(afflictedNameEditText.getText().toString());
+                if (afflictedNameEditText.getText().toString().isEmpty()) {
+                    Toast.makeText(AfflictedActivity.this, "Please Enter Your Name", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent chatIntentAfflicted = new Intent(AfflictedActivity.this, AfflictedChatActivity.class);
+                    startActivity(chatIntentAfflicted);
+                }
             }
+
         });
 
     }
 
-    public void Name(String afflictedName) {
-
-        if(afflictedName.isEmpty()) {
-            Toast.makeText(this,"Please Enter Your Name", Toast.LENGTH_SHORT).show();
-        } else {
-            Intent chatIntentAfflicted = new Intent(AfflictedActivity.this, AfflictedChatActivity.class);
-            startActivity(chatIntentAfflicted);
-        }
-    }
 }
