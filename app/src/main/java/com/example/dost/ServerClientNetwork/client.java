@@ -13,13 +13,14 @@ public class client implements Protocols {
     private ArrayList<String> activeVolunteers;
     private String channelID;
     private User user;
+
     public client(String hostname, int port, String username, User.TYPE type) throws IOException {
         this.duplexer=new Duplexer(new Socket(hostname,port));// creating a new Duplexer object
         this.username=username;
         this.type=type;
         this.serverStatus=true;
         this.channelID=null;
-        this.user=new User(type,username);
+        this.user=new User(type,username, User.STATUS.ONLINE);
     }
     private void sendMessage(String message){
         this.duplexer.send(message);
@@ -34,6 +35,8 @@ public class client implements Protocols {
      */
     public void run() throws CommException {
         while (serverStatus){
+
+            // Receiving data from the Server and updating the client
             if(!this.duplexer.nextLine()){
                 try {
                     throw new CommException("The server is down");
@@ -43,7 +46,7 @@ public class client implements Protocols {
             }
             String message=this.duplexer.read();
             ArrayList<String> messages=null;
-            messages.addAll(Arrays.asList(message.split(" ")));
+            messages.addAll(Arrays.asList(message.split(" ")));// adding the message received separated by spaces into a list
             switch (messages.get(0)) {
                 case ONLINE:
                     // convey user the message that they are online
@@ -66,11 +69,31 @@ public class client implements Protocols {
                 case USER_OFFLINE:// messages.get(1) will have the username of the person that they were connected to who just went offline
                     System.out.println("The user they were talking to just went offline");
                     break;
+                case RECEIVED:
+                    if(this.channelID==messages.get(1)){
+                        String msg=null;
+                        for(int i=0;i<messages.size()-2;i++){
+                            msg=msg+" "+messages.get(i+2);// adding all the spaces back and converting it into a string format so that it can be displayed easily
+                        }
+                        this.user.newMessageFromServer(true);
+                        this.user.setMessageFromServer(msg);// sending the message to UI so that it can be updated
+                    }
+                    else{
+                        System.out.println("Message received from different channel");
+                    }
                 case ERROR:
                     serverStatus = false;
                     throw new CommException("There is a error in the server");
             }
 
+            // Updating the server as User does some action
+            if(this.user.getStatus()== User.STATUS.OFFLINE){
+                this.duplexer.send(USER_OFFLINE+" "+this.username);// communicating with the server that the user just went offline
+            }
+            else if(this.user.updateServer==true){
+                this.duplexer.send(SEND+" "+channelID+" "+this.user.getMessageFromUI());
+                this.user.newMessageFromUI(false);// once the client has read the message setting back the UI update to false
+            }
         }
     }
     /**
@@ -80,6 +103,7 @@ public class client implements Protocols {
     public void close() throws Exception {
         this.duplexer.close();
     }
+
     /**
      * To create and start a thread of the run method when the GUI is initialized and running
      */

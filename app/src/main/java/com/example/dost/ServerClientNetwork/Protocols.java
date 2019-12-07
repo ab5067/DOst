@@ -15,6 +15,7 @@ public interface Protocols {
      * 10. SENT(will be sent by the server to the user that the message was sent to the specific channel) channelID
      * 11. CONNECTED(when the user is connected to the other user) channelID(the ID of the channel that the user will be connected to)
      * 12. USER_OFFLINE(if the user they are talking to goes offline) username(the user they were talking to)
+     * 13. RECEIVED(when we receive a message from the server) channelID(channelID of the user that has sent the message) message(the actual message)
      */
     public static final String ONLINE="ONLINE";
     public static final String SEND="SEND";
@@ -25,7 +26,6 @@ public interface Protocols {
     public static final String ERROR="ERROR";
     public static final String TYPE="TYPE";
     public static final String DISCONNECT="DISCONNECT";
-    public static final String VOLUNTEER="VOLUNTEER";
-    public static final String AFFLICTED="AFFLICTED";
     public static final String USER_OFFLINE="USER_OFFLINE";
+    public static final String RECEIVED="RECEIVED";
 }
