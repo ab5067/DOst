@@ -25,6 +25,7 @@ public class VolunteerFeedActivity extends AppCompatActivity {
     ArrayAdapter volunteerArrayAdapter;
     String volunteerUserMessage;
     Button capsButton;
+
     //client volunteerClient;
 
     @Override

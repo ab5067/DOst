@@ -19,6 +19,7 @@ public class AfflictedChatActivity extends AppCompatActivity {
     ArrayList<String> afflictedChatArrayList;
     ArrayAdapter afflictedArrayAdapter;
     String afflictedUserMessage;
+    ArrayList<client> ActiveUsers;// storing all the active users
     //client afflictedClient;
 
     @Override
