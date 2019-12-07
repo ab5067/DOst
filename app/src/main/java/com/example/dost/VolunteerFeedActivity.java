@@ -11,10 +11,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.net.Socket;
 import java.util.ArrayList;
-import java.util.List;
 
 public class VolunteerFeedActivity extends AppCompatActivity {
 
