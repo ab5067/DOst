@@ -1,4 +1,4 @@
-package com.example.dost.ServerClientNetwork;
+package com.example.dostserver;
 
 import java.io.IOException;
 import java.net.ServerSocket;
