@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.example.dost.ServerClientNetwork.client;
+
 import java.util.ArrayList;
 
 public class AfflictedChatActivity extends AppCompatActivity {

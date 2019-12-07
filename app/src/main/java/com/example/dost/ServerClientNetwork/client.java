@@ -3,9 +3,7 @@ package com.example.dost.ServerClientNetwork;
 import java.io.IOException;
 import java.net.Socket;
 
-import static com.example.dost.ServerClientNetwork.Protocols.*;
-
-public class client implements Runnable {
+public class client implements Runnable,Protocols {
     private Duplexer duplexer;
     private String username;
     private String type;
@@ -14,21 +12,20 @@ public class client implements Runnable {
         this.username=username;
         this.type=type;
     }
-    private void sendMessage(String message){
-        this.duplexer.send(message);
-    }
-
-    private String readMessage(){
-        return this.duplexer.read();
-    }
-
-
     /**
      * Will be implementing the protocols for the server
      */
     @Override
     public void run() {
-        while (true){
+        boolean serverStatus=true;
+        while (serverStatus){
+            if(!this.duplexer.nextLine()){
+                try {
+                    throw new CommException("The server is down");
+                } catch (CommException e) {
+                    e.printStackTrace();
+                }
+            }
             String message=this.duplexer.read();
             String[] messages=message.split(" ");
             switch (messages[0]){
@@ -41,11 +38,13 @@ public class client implements Runnable {
                     break;
                 case ACTIVE_USERS:
                     break;
-                case DISCONNECT:
+                case DISCONNECT:// if they are disconnecting from a user
+                    serverStatus=false;
                     break;
                 case TYPE:
                     break;
                 case ERROR:
+                    serverStatus=false;
                     break;
             }
         }
