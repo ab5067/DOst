@@ -2,6 +2,7 @@ package com.example.dost.ServerClientNetwork;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
 
 public class Server implements Runnable{
     private static ServerSocket server;
@@ -14,9 +15,14 @@ public class Server implements Runnable{
             e.printStackTrace();
         }
     }
+
     //TODO: Implement all the functionality to handle all the protocols to and from the client
     @Override
     public void run() {
-
+        try {
+            Socket user=server.accept();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

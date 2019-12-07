@@ -14,7 +14,6 @@ public class client implements Protocols {
     private String channelID;
     private User user;
 
-
     public client(String hostname, int port, String username, User.TYPE type) throws IOException {
         this.duplexer=new Duplexer(new Socket(hostname,port));// creating a new Duplexer object
         this.username=username;
@@ -22,13 +21,6 @@ public class client implements Protocols {
         this.serverStatus=true;
         this.channelID=null;
         this.user=new User(type, User.STATUS.ONLINE);
-    }
-    private void sendMessage(String message){
-        this.duplexer.send(message);
-    }
-
-    private String readMessage(){
-        return this.duplexer.read();
     }
 
     /**
@@ -105,6 +97,7 @@ public class client implements Protocols {
             }
         }
     }
+
     /**
      * For closing the client side of the game
      * @throws Exception
