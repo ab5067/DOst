@@ -93,7 +93,7 @@ public class User {
     }
     /**
      * The current status of the user
-     * @return
+     * @return either OFFLINE or ONLINE
      */
     public STATUS getStatus(){
         return this.status;

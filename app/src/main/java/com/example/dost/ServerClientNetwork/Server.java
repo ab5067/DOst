@@ -14,7 +14,7 @@ public class Server implements Runnable{
             e.printStackTrace();
         }
     }
-
+    //TODO: Implement all the functionality to handle all the protocols to and from the client
     @Override
     public void run() {
 

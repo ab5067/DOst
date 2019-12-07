@@ -14,6 +14,11 @@ public class client implements Protocols {
     private String channelID;
     private User user;
 
+    //TODO: Implement the functionality for the ActiveUsers list so that it can be displayed in the UI
+    // Implement the functionality for Connecting to a specific user when the user clicks on one of the active users from the list
+    // Implement the Disconnect functionality so that, when a user disconnects they can update the server
+
+
     public client(String hostname, int port, String username, User.TYPE type) throws IOException {
         this.duplexer=new Duplexer(new Socket(hostname,port));// creating a new Duplexer object
         this.username=username;
@@ -60,7 +65,7 @@ public class client implements Protocols {
                 case SENT:
                     if(channelID.equals(messages.get(1))){
                         System.out.println("The message was successfully delivered");
-                        // Show in the app that the message was sent
+                        // Show in the UI that the message was sent
                     }
                     else{
                         System.out.println("Message was not delivered by the server");
