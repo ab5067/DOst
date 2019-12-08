@@ -13,6 +13,9 @@ public class User {
         ONLINE,OFFLINE
     }
 
+    /**
+     * TODO: functions to be used in the UI
+     */
     private TYPE type;
     private STATUS status; // whether online/offline
     private String messageFromUI;

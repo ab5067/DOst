@@ -12,7 +12,7 @@ public class client implements Protocols {
     private Boolean serverStatus;
     private ArrayList<String> activeVolunteers;
     private String channelID;
-    private User user;
+    public User user;// so that it can be used in the UI
 
     public client(String hostname, int port, String username, User.TYPE type) throws IOException {
         this.duplexer=new Duplexer(new Socket(hostname,port));// creating a new Duplexer object
@@ -51,6 +51,7 @@ public class client implements Protocols {
                     break;
                 case CONNECTED:
                     this.channelID=messages.get(1);
+                    break;
                 case SENT:
                     if(channelID.equals(messages.get(1))){
                         System.out.println("The message was successfully delivered");
@@ -75,6 +76,7 @@ public class client implements Protocols {
                     else{
                         System.out.println("Message received from different channel");
                     }
+                    break;
                 case ERROR:
                     serverStatus = false;
                     throw new CommException("There is a error in the server");
