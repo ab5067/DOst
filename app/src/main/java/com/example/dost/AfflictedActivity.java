@@ -29,8 +29,8 @@ public class AfflictedActivity extends AppCompatActivity {
                 if (afflictedNameEditText.getText().toString().isEmpty()) {
                     Toast.makeText(AfflictedActivity.this, "Please Enter Your Name", Toast.LENGTH_SHORT).show();
                 } else {
-                    Intent chatIntentAfflicted = new Intent(AfflictedActivity.this, AfflictedChatActivity.class);
-                    startActivity(chatIntentAfflicted);
+                    Intent feedIntentAfflicted = new Intent(AfflictedActivity.this, AfflictedFeedActivity.class);
+                    startActivity(feedIntentAfflicted);
                 }
             }
 

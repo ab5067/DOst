@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".volunteerQuizActivity"></activity>
+        <activity android:name=".AfflictedFeedActivity"></activity>
+        <activity android:name=".volunteerQuizActivity" />
         <activity android:name=".AfflictedChatActivity" />
         <activity android:name=".VolunteerFeedActivity" />
         <activity
