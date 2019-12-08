@@ -53,6 +53,7 @@ public class VolunteerFeedActivity extends AppCompatActivity {
                 //volunteerClient.writer.println(volunteerUserMessage);
                 //volunteerClient.writer.flush();
                 volunteerChatArrayList.add("> You: " + volunteerUserMessage);
+                volunteerMessageEditText.setText("");
                 volunteerChatListView.setAdapter(volunteerArrayAdapter);
             }
         });
