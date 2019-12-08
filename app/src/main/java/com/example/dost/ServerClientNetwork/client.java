@@ -13,6 +13,7 @@ public class client implements Protocols {
     private ArrayList<String> activeVolunteers;
     private String channelID;
     private User user;
+    private Boolean conveyType;
 
     public client(String hostname, int port, String username, User.TYPE type) throws IOException {
         this.duplexer=new Duplexer(new Socket(hostname,port));// creating a new Duplexer object
@@ -21,6 +22,7 @@ public class client implements Protocols {
         this.serverStatus=true;
         this.channelID=null;
         this.user=new User(type, User.STATUS.ONLINE);
+        this.conveyType=true;
     }
 
     /**
@@ -41,6 +43,7 @@ public class client implements Protocols {
             messages.addAll(Arrays.asList(message.split(" ")));// adding the message received separated by spaces into a list
             switch (messages.get(0)) {
                 case ONLINE:
+                    this.duplexer.send(ONLINE+" "+this.username+" "+this.type);
                     // convey user the message that they are online
                     System.out.println("Connected to the server");
                     break;
@@ -91,9 +94,13 @@ public class client implements Protocols {
                 this.duplexer.send(CONNECT+" "+this.user.getConnectedUsername());
                 this.user.setUpdateServerNewVolunteer(false);// re-initializing it after updating once
             }
-            else if (this.user.getStatus()== User.STATUS.OFFLINE){// if the user wants to disconnect, then send update to the server
-                this.duplexer.send(USER_OFFLINE+" "+this.username);
-                serverStatus=false;
+            else if(this.user.getStatus()== User.STATUS.OFFLINE) {// if the user wants to disconnect, then send update to the server
+                this.duplexer.send(USER_OFFLINE + " " + this.username);
+                serverStatus = false;
+            }
+            else if(this.conveyType){
+                this.duplexer.send(TYPE+" "+this.type);// conveying the type of the user that just connected to the server
+                this.conveyType=false;
             }
         }
     }

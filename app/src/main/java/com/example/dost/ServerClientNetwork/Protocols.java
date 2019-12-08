@@ -3,7 +3,7 @@ package com.example.dost.ServerClientNetwork;
 public interface Protocols {
     /**
      * Defining the protocols:
-     * 1. ONLINE(to letting the client know that they are online)
+     * 1. ONLINE(to letting the client know that they are online) username(sending the username if connecting for the first time) type(either AFFLICTED or VOLUNTEER)
      * 2. SEND channelID(id of the channel so that it can be sent to a specific person) message(the message that they want to send)
      * 3. CONNECT USER_NAME(to connect to a specific user, and this will create a unique channel for them, also only in the case of a AFFLICTED person)
      * 4. ACTIVE_USERS USER_NAMES(names of all the users who are active separated by a space, this will only be in the case of a AFFLICTED person, and not for a Volunteer)

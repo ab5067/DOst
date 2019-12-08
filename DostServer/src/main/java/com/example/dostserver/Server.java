@@ -3,13 +3,23 @@ package com.example.dostserver;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Server implements Runnable{
-    private static ServerSocket server;
+    private static ServerSocket socket;
+    /**
+     * Enumerator that defines the type of the user
+     */
+    public enum TYPE{
+        VOLUNTEER,AFFLICTED
+    }
+    public enum STATUS{
+        ONLINE,OFFLINE
+    }
 
     public Server(int port) {
         try {
-            this.server=new ServerSocket(port);
+            this.socket=new ServerSocket(port);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -18,10 +28,15 @@ public class Server implements Runnable{
     //TODO: Implement all the functionality to handle all the protocols to and from the client
     @Override
     public void run() {
+        ArrayList<ServerHelper> serverHelpers=new ArrayList<>();
         while (true) {
             try {
-                Socket user = server.accept();
-                Duplexer duplexer=new Duplexer(user);
+                Socket server = socket.accept();
+                if(server!=null) {
+                    ServerHelper serverHelper = new ServerHelper(server);
+                    serverHelpers.add(serverHelper);
+                    server=null;
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }

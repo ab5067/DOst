@@ -1,7 +1,7 @@
 package com.example.dost.ServerClientNetwork;
 
 import java.util.ArrayList;
-
+//InetAddress address = InetAddress.getByName(host);
 public class User {
     /**
      * Enumerator that defines the type of the user
@@ -22,6 +22,7 @@ public class User {
     public Boolean updateServer;
     public Boolean updateUI;
     public Boolean updateServerNewVolunteer;
+    public Boolean conveyType;
 
     public User(TYPE type, STATUS status) {
         this.type=type;
@@ -33,6 +34,7 @@ public class User {
         activeUsers=new ArrayList<>();
         connectedUser=null;
         updateServerNewVolunteer=false;
+        conveyType=false;
     }
 
     /**
