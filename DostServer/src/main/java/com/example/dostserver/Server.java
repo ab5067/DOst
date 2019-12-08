@@ -28,14 +28,14 @@ public class Server implements Runnable{
     //TODO: Implement all the functionality to handle all the protocols to and from the client
     @Override
     public void run() {
-        ArrayList<ServerHelper> serverHelpers=new ArrayList<>();
+        ArrayList<ServerHelper> activeUsers = new ArrayList<>();
         while (true) {
             try {
                 Socket server = socket.accept();
                 if(server!=null) {
                     ServerHelper serverHelper = new ServerHelper(server);
-                    serverHelpers.add(serverHelper);
-                    server=null;
+                    activeUsers.add(serverHelper);
+                    serverHelper.addActiveUsers(activeUsers);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
